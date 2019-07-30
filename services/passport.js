@@ -1,12 +1,16 @@
+// Backend setup for oauth.
+
 const passport = require('passport')
 const User = require('./../models/User')
 const config = require('../config')
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const LocalStrategy = require('passport-local')
+
 // Create Local Strategy
 // By default localstrategy is expecting a username and a password
 // With the config we setup below, it will look for an email instead and not a username
+
 const localOptions = { usernameField: 'email' }
 const localLogin = new LocalStrategy(
   localOptions,
@@ -23,6 +27,7 @@ const localLogin = new LocalStrategy(
         if (!isMatch) {
           return done(null, false)
         }
+
         // Passport attaches the user found here to req.user
         return done(null, user)
       })
@@ -31,6 +36,7 @@ const localLogin = new LocalStrategy(
     }
   }
 )
+
 // Setup options fot JWT Strategy
 // We need to tell our strategy where to look for the token
 const jwtOptions = {
@@ -42,6 +48,7 @@ const jwtOptions = {
   // so that it can decode it
   secretOrKey: config.secret
 }
+
 // We are going to get the payload argument from a request
 // the payload argument is coming from the function we created in the authroutes
 // done is the function we call once we've tried to authenticate this user
@@ -61,6 +68,7 @@ const jwtlogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     done(e, false)
   }
 })
+
 // Tells passport to use this strategy
 passport.use(jwtlogin);
 passport.use(localLogin);
