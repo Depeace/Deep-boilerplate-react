@@ -1,9 +1,18 @@
-const router    = require('express').Router();
-const apiRoutes = require('./apiRoutes');
+const router      = require('express').Router();
+const authRoutes  = require('./authRoutes');
+const todoRoutes =  require('./todoRoutes');
 
-// Setup API routes
-// prepends /api to all of the routes declared in this file
+const passportService = require('./../../services/passport');
 
-router.use('/api', apiRoutes);
+const authMiddleware = require('./../../middlewares/authMiddlewares');
+// / api prepended to these routes
+
+router.route('/test')
+  .get(authMiddleware.requireAuth, (req, res) => {
+    res.send(req.user);
+  });
+
+router.use('/auth', authRoutes);
+router.use('/todo', todoRoutes);
 
 module.exports = router;
