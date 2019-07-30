@@ -4,8 +4,6 @@ const authController = require('./../../controllers/authController');
 const passportService = require('./../../services/passport');
 const authMiddleware = require('./../../middlewares/authMiddlewares');
 
-
-
 router.route('/signup')
 .post(authController.signUp);
 

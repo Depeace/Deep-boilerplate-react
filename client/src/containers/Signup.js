@@ -6,26 +6,25 @@ import { signup } from "../actions";
 import validator from 'validator';
 
 class Signup extends Component {
-  renderErrors = ({ error, touched }) => {
+  renderErrors = ({error, touched}) => {
     if(touched && error) {
-      return (
+      return(
         <div>
           <div>{error}</div>
         </div>
-      );
+      )
     }
   }
-
-  renderInput = ({ input, label, meta }) => {
-    console.log(meta);
-    return (
+  renderInput = ({input, label, type, meta}) => {
+    return(
       <div>
         <label>{label}</label>
-        <input {...input} autoComplete='off'/>
+        <input type={type} {...input} autoComplete = 'off'/>
         {this.renderErrors(meta)}
       </div>
-    );
+    )
   }
+
 
   onSubmit = formProps => {
     console.log(formProps);
@@ -35,24 +34,25 @@ class Signup extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <fieldset>
+      
           <Field
             name='email'
             type='text'
-            label='Email'
-            component={this.renderInput}
+            label = 'Email'
+            component= {this.renderInput}
             autoComplete='none'/>
         </fieldset>
         <fieldset>
+         
           <Field
             name='password'
             type='password'
             label='password'
-            component={this.renderInput}
+            component = {this.renderInput}
             autoComplete='none'/>
         </fieldset>
         <button>Signup</button>
@@ -65,34 +65,27 @@ function mapStateToProps(state) {
   return { errorMessage: state.auth.errorMessage };
 }
 
-
 const validate = formValues => {
   const errors = {};
-  console.log("validator", formValues);
-
+  console.log('validator', formValues);
   if(!formValues.email) {
-    errors.email = 'You must enter an email';
+    errors.email = "You must enter an email";
   }
-
-  if(formValues.email){
-    if(!validator.isEmail(formValues.email)) {
-      errors.email = "You must enter a valid email address";
+  if (formValues.email){
+    if(!validator.isEmail(formValues.email)){
+      errors.email = 'You must enter a valid email address';
     }
   }
-
-  if(!formValues.password){
-    errors.password = "You must enter a password";
+  if (!formValues.password){
+    errors.password = 'You must enter a password'
   }
-
   return errors;
-
-};
-
+}
 
 export default compose(
   connect(mapStateToProps, { signup }),
-  reduxForm({
-    form: 'signup',
+  reduxForm({ 
+    form: 'signup', 
     validate
   })
 )(Signup);

@@ -1,4 +1,5 @@
-const db = require('./../models');
+// const db = require('./../models');
+const db = require('../models')
 
 module.exports = {
   getTodos: async (req, res) => {
