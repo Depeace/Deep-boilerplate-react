@@ -13,8 +13,6 @@ const tokenForUser = function(user) {
 
 
 module.exports = {
-
-  
   signUp: async (req, res) => {
     const { email, password } = req.body;
     if(!email || !password) {
@@ -34,8 +32,6 @@ module.exports = {
       res.status(404).json({ e });
     }
   },
-
-
   signIn: (req, res) => {
     res.send({ token: tokenForUser(req.user)});
   }
