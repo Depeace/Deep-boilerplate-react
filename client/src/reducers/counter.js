@@ -1,3 +1,4 @@
+    
 import { INCREMENT_COUNTER, DECREMENT_COUNTER } from "../actions/types";
 
 const INITIAL_STATE = {
